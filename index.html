@@ -6,36 +6,72 @@
     <title>Be My Valentine?</title>
     <style>
         body {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            height: 100vh; margin: 0; background-color: #ffebee; font-family: 'Arial', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffebee;
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
+            text-align: center;
         }
-        .container { text-align: center; padding: 20px; }
-        img { width: 250px; height: auto; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: #d32f2f; font-size: 2rem; }
-        .buttons { display: flex; gap: 20px; justify-content: center; align-items: center; margin-top: 20px; }
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+        img {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #d32f2f;
+            margin-bottom: 30px;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
         button {
-            padding: 15px 30px; font-size: 18px; border: none; border-radius: 10px;
-            cursor: pointer; transition: transform 0.2s ease; font-weight: bold;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
         }
-        #yesBtn { background-color: #4caf50; color: white; z-index: 100; }
-        #noBtn { background-color: #f44336; color: white; position: relative; }
-        .hidden { display: none; }
+        #yesBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            position: relative;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div id="questionPage" class="container">
-        <img src="https://media.tenor.com/9v83O8mJ600AAAAi/milk-and-mocha-bear-hearts.gif" alt="Asking GIF">
+    <div id="questionPage">
+        <img src="https://media.giphy.com/media/c76IJLufpN2G6n37i8/giphy.gif" alt="Cute bear">
         <h1>Will you be my valentine?</h1>
-        <div class="buttons">
+        <div class="btn-group">
             <button id="yesBtn">Yes</button>
             <button id="noBtn">No</button>
         </div>
     </div>
 
-    <div id="successPage" class="container hidden">
-        <img src="https://media.tenor.com/9n_l9T_R9mIAAAAi/milk-and-mocha.gif" alt="Success GIF">
+    <div id="successPage" class="hidden">
+        <img src="https://media.giphy.com/media/KztT2c4u8mYYUiCiS7/giphy.gif" alt="Happy bear">
         <h1>I knew you would say yes!! ❤️</h1>
     </div>
 
@@ -45,26 +81,31 @@
         const questionPage = document.getElementById('questionPage');
         const successPage = document.getElementById('successPage');
 
-        let yesScale = 1;
+        let scale = 1;
 
-        // The "Runaway" logic
-        noBtn.addEventListener('mouseover', moveButton);
-        noBtn.addEventListener('touchstart', moveButton); // For mobile users
-
-        function moveButton(e) {
-            // Calculate random position
+        // Function to move the NO button
+        function moveNoButton() {
+            // Calculate random coordinates
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
             noBtn.style.position = 'absolute';
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
 
-            // Make Yes grow
-            yesScale += 0.3;
-            yesBtn.style.transform = `scale(${yesScale})`;
+            // Make YES button bigger
+            scale += 0.4;
+            yesBtn.style.transform = `scale(${scale})`;
         }
 
+        // Move button on hover OR touch (for mobile)
+        noBtn.addEventListener('mouseenter', moveNoButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevents clicking
+            moveNoButton();
+        });
+
+        // Show success page
         yesBtn.addEventListener('click', () => {
             questionPage.classList.add('hidden');
             successPage.classList.remove('hidden');
