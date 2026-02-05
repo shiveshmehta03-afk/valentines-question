@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffebee;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        .container { text-align: center; }
+        img { width: 250px; border-radius: 15px; margin-bottom: 20px; }
+        h1 { color: #d32f2f; }
+        .buttons { display: flex; gap: 20px; justify-content: center; align-items: center; margin-top: 20px; }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        #yesBtn { background-color: #4caf50; color: white; }
+        #noBtn { background-color: #f44336; color: white; position: relative; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="questionPage" class="container">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG56am80eXp6ZzZ3eHh4eHh4eHh4eHh4eHh4eHh4eHh4JnB2PTE/c76IJLufpN2G6n37i8/giphy.gif" alt="Cute GIF">
+        <h1>Will you be my valentine?</h1>
+        <div class="buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div id="successPage" class="container hidden">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG56am80eXp6ZzZ3eHh4eHh4eHh4eHh4eHh4eHh4eHh4JnB2PTE/KztT2c4u8mYYUiCiS7/giphy.gif" alt="Happy GIF">
+        <h1>I knew you would say yes!! ❤️</h1>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionPage = document.getElementById('questionPage');
+        const successPage = document.getElementById('successPage');
+
+        let yesScale = 1;
+
+        // Move the "No" button and grow the "Yes" button
+        noBtn.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+
+            // Make "Yes" grow
+            yesScale += 0.2;
+            yesBtn.style.transform = `scale(${yesScale})`;
+        });
+
+        // Handle "Yes" click
+        yesBtn.addEventListener('click', () => {
+            questionPage.classList.add('hidden');
+            successPage.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
