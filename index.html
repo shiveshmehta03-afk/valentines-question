@@ -6,29 +6,19 @@
     <title>Be My Valentine?</title>
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #ffebee;
-            font-family: 'Arial', sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100vh; margin: 0; background-color: #ffebee; font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
-        .container { text-align: center; }
-        img { width: 250px; border-radius: 15px; margin-bottom: 20px; }
-        h1 { color: #d32f2f; }
+        .container { text-align: center; padding: 20px; }
+        img { width: 250px; height: auto; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #d32f2f; font-size: 2rem; }
         .buttons { display: flex; gap: 20px; justify-content: center; align-items: center; margin-top: 20px; }
         button {
-            padding: 15px 30px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
+            padding: 15px 30px; font-size: 18px; border: none; border-radius: 10px;
+            cursor: pointer; transition: transform 0.2s ease; font-weight: bold;
         }
-        #yesBtn { background-color: #4caf50; color: pink; }
+        #yesBtn { background-color: #4caf50; color: white; z-index: 100; }
         #noBtn { background-color: #f44336; color: white; position: relative; }
         .hidden { display: none; }
     </style>
@@ -36,7 +26,7 @@
 <body>
 
     <div id="questionPage" class="container">
-       <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG56am80eXp6ZzZ3eHh4eHh4eHh4eHh4eHh4eHh4eHh4JnB2PTE/c76IJLufpN2G6n37i8/giphy.gif" alt="Cute GIF">
+        <img src="https://media.tenor.com/9v83O8mJ600AAAAi/milk-and-mocha-bear-hearts.gif" alt="Asking GIF">
         <h1>Will you be my valentine?</h1>
         <div class="buttons">
             <button id="yesBtn">Yes</button>
@@ -45,7 +35,7 @@
     </div>
 
     <div id="successPage" class="container hidden">
-        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmNlYXRtanJmZ3NrdjE1a3BlcGJ2NHJ0MGJ3ZTdhNHgzdTdwMW1qaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/a6J89ZSWfO0GAmuPpt/giphy.gif" alt="Happy GIF">
+        <img src="https://media.tenor.com/9n_l9T_R9mIAAAAi/milk-and-mocha.gif" alt="Success GIF">
         <h1>I knew you would say yes!! ❤️</h1>
     </div>
 
@@ -57,8 +47,12 @@
 
         let yesScale = 1;
 
-        // Move the "No" button and grow the "Yes" button
-        noBtn.addEventListener('mouseover', () => {
+        // The "Runaway" logic
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton); // For mobile users
+
+        function moveButton(e) {
+            // Calculate random position
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
@@ -66,12 +60,11 @@
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
 
-            // Make "Yes" grow
-            yesScale += 0.2;
+            // Make Yes grow
+            yesScale += 0.3;
             yesBtn.style.transform = `scale(${yesScale})`;
-        });
+        }
 
-        // Handle "Yes" click
         yesBtn.addEventListener('click', () => {
             questionPage.classList.add('hidden');
             successPage.classList.remove('hidden');
